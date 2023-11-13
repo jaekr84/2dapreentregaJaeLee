@@ -1,34 +1,44 @@
-let usuario = prompt("Por favor, introduce tu nombre");
-alert("¡Hola, " + usuario + "! Bienvenido al juego de problemas matemáticos.");
+// Definir el array de productos
+let productos = [
+    {id: 1, titulo: 'Camiseta', stock: 10, precio: 15.99},
+    {id: 2, titulo: 'Pantalones', stock: 7, precio: 25.99},
+    {id: 3, titulo: 'Zapatos', stock: 5, precio: 45.99},
+    {id: 4, titulo: 'Gorra', stock: 8, precio: 10.99},
+    {id: 5, titulo: 'Cinturón', stock: 6, precio: 9.99}
+];
 
-let problemas = [];
-let puntos = 0;
+// Solicitar el nombre del usuario
+let nombreUsuario = prompt('Por favor, ingresa tu nombre');
 
-for(let i=0; i<5; i++) {
-    let num1 = Math.floor(Math.random() * 9) + 1;
-    let num2 = Math.floor(Math.random() * 9) + 1;
-    let operacion = Math.floor(Math.random() * 3);
-    let respuesta_correcta;
+// Saludar al usuario
+alert(`¡Hola, ${nombreUsuario}! Bienvenido a nuestra tienda.`);
 
-    switch(operacion) {
-        case 0:
-            respuesta_correcta = num1 + num2;
-            break;
-        case 1:
-            respuesta_correcta = num1 - num2;
-            break;
-        case 2:
-            respuesta_correcta = num1 * num2;
-            break;
+// Mostrar lista de productos
+console.log(productos)
+
+// Inicializar el total de la compra
+let totalCompra = 0;
+
+// Preguntar al usuario qué productos quiere comprar
+let seguirComprando = true;
+while (seguirComprando) {
+    let idProducto = prompt('Ingresa el ID del producto que quieres comprar');
+    let producto = productos.find(p => p.id == idProducto);
+    if (producto) {
+        totalCompra += producto.precio;
+        alert(`Has agregado ${producto.titulo} a tu carrito. Tu total actual es $${totalCompra}`);
+    } else {
+        alert('Lo siento, ese producto no existe');
     }
-
-    let respuesta_usuario = prompt("¿Cuánto es " + num1 + (operacion == 0 ? " + " : (operacion == 1 ? " - " : " * ")) + num2 + "?");
-    if(respuesta_usuario == respuesta_correcta) {
-        puntos++;
-    }
-
-    alert("Tu respuesta fue: " + respuesta_usuario + ". La respuesta correcta es: " + respuesta_correcta + ".");
-    problemas.push({problema: num1 + (operacion == 0 ? " + " : (operacion == 1 ? " - " : " * ")) + num2, respuesta_usuario: respuesta_usuario, respuesta_correcta: respuesta_correcta});
+    seguirComprando = confirm('¿Quieres agregar otro producto a tu carrito?');
 }
 
-alert("Tu puntuación total es: " + puntos + ".");
+// Mostrar el total de la compra
+alert(`Tu total de compra es $${totalCompra}`);
+
+// Preguntar en cuántas cuotas quiere pagar el total de la compra
+let cuotas = prompt('¿En cuántas cuotas quieres pagar el total de la compra? (3 o 6)');
+let valorCuota = totalCompra / cuotas;
+
+// Mostrar cuánto debería pagar en cada cuota
+alert(`Deberías pagar $${valorCuota.toFixed(2)} en cada una de las ${cuotas} cuotas.`);
